@@ -8,8 +8,8 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const logger = new Logger(NestApplication.name);
 
-    const configSrvice = app.get(ConfigService<Config>);
-    const port = configSrvice.get<number>("port") || 3100;
+    const configService = app.get(ConfigService<Config>);
+    const port = configService.get<number>("PORT") || 3100;
 
     await app.listen(port);
     logger.log(`Service listening to port: ${port}`);
