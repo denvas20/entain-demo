@@ -3,6 +3,7 @@ import { AppModule } from "./app.module";
 import { ConfigService } from "@nestjs/config";
 import { Config } from "./app.types";
 import { Logger, ValidationPipe } from "@nestjs/common";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -18,6 +19,14 @@ async function bootstrap() {
             }
         })
     );
+
+    const swaggerConfig = new DocumentBuilder()
+        .setTitle("Entain Demo API")
+        .setDescription("")
+        .setVersion("1.0")
+        .build();
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup("api", app, document);
 
     const configService = app.get(ConfigService<Config>);
     const port = configService.get<number>("PORT") || 3100;
