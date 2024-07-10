@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { Genre } from "../entities/genre.entity";
-import { Movie } from "../entities/device.entity";
+import { Movie } from "../entities/movie.entity";
 import { ConfigService } from "@nestjs/config";
 import { Config } from "../app.types";
 

@@ -10,5 +10,13 @@ export class MovieQueryDto {
     limit?: number;
 
     @IsString()
+    search!: string;
+}
+
+export class CreateMovieDto {
+    @IsInt()
+    id!: number;
+
+    @IsString()
     title!: string;
 }
