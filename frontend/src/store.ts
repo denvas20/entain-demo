@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { movieApi } from "./redux/services/movie";
-import { testSlice } from "./redux/slices/testSlice";
+import { searchSlice } from "./redux/slices/searchSlice";
 
 export const store = configureStore({
     reducer: {
-        test: testSlice.reducer,
+        search: searchSlice.reducer,
         [movieApi.reducerPath]: movieApi.reducer
     },
     middleware: (getDefaultMiddleware) =>

@@ -18,7 +18,10 @@ module.exports = (env) => {
             // publicPath: "/"
         },
         resolve: {
-            extensions: [".tsx", ".ts", ".jsx", ".js"]
+            extensions: [".tsx", ".ts", ".jsx", ".js"],
+            alias: {
+                "@mui/styled-engine": "@mui/styled-engine-sc"
+            }
         },
         module: {
             rules: [
@@ -28,7 +31,7 @@ module.exports = (env) => {
                 },
                 {
                     test: /\.css$/,
-                    loader: "css-loader"
+                    use: ["style-loader", "css-loader"]
                 }
             ]
         },
