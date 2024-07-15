@@ -25,12 +25,4 @@ export class MovieService {
         });
         return { data, count };
     }
-
-    async create(createMovieDto: CreateMovieDto) {
-        // TODO exceptions
-        const { id, title } = createMovieDto;
-        const object = this.movieRepository.create({ id, title });
-        const device = await this.movieRepository.save(object);
-        return device;
-    }
 }

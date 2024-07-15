@@ -1,6 +1,9 @@
 export interface Config {
     // Service
     PORT: number;
+    API_URL: string;
+    API_KEY: string;
+    SEED: boolean;
     // Database
     DATABASE_HOST: string;
     DATABASE_PORT: number;

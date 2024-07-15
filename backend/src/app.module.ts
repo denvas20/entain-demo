@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeOrmFactory } from "./factories/typeOrm.factory";
 import { MovieModule } from "./modules/movie/movie.module";
+import { GenreModule } from "./modules/genre/genre.module";
 
 @Module({
     imports: [
@@ -17,7 +18,8 @@ import { MovieModule } from "./modules/movie/movie.module";
             inject: [ConfigService],
             useFactory: typeOrmFactory
         }),
-        MovieModule
+        MovieModule,
+        GenreModule
     ],
     controllers: [AppController],
     providers: [AppService]
