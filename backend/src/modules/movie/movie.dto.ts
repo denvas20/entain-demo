@@ -1,5 +1,4 @@
-import { IsInt, IsOptional, IsString } from "class-validator";
-import { Genre } from "../../entities/genre.entity";
+import { IsArray, IsInt, IsOptional, IsString } from "class-validator";
 
 export class MovieQueryDto {
     @IsOptional()
@@ -12,14 +11,11 @@ export class MovieQueryDto {
 
     @IsString()
     search!: string;
-}
 
-export class CreateMovieDto {
-    @IsInt()
-    id!: number;
-
-    @IsString()
-    title!: string;
+    @IsOptional()
+    @IsArray()
+    @IsString({ each: true })
+    genres?: Array<number>;
 }
 
 export interface DiscoveredMoviesDto {

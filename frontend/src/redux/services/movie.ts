@@ -1,10 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Movie } from "../../types/movie";
+import QueryString from "qs";
+
+const DEFAULT_PAGE_SIZE = 25;
 
 interface MovieQuery {
-    offset?: number;
-    limit?: number;
+    page: number;
     search: string;
+    genres: Array<number>;
 }
 
 interface ListResult<T = unknown> {
@@ -17,12 +20,14 @@ export const movieApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100/movies" }),
     endpoints: (builder) => ({
         getMovies: builder.query<ListResult<Movie>, MovieQuery>({
-            query: ({ offset, limit, search }) => {
-                const query = new URLSearchParams();
-                if (offset !== undefined) query.append("offset", `${offset}`);
-                if (limit !== undefined) query.append("limit", `${limit}`);
-                query.append("search", `${search}`);
-                return `?${query}`;
+            query: ({ search, page, genres }) => {
+                const query = {
+                    offset: (page - 1) * DEFAULT_PAGE_SIZE,
+                    limit: DEFAULT_PAGE_SIZE,
+                    search,
+                    genres
+                };
+                return `?${QueryString.stringify(query)}`;
             }
         })
     })

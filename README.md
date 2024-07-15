@@ -16,3 +16,9 @@ It would be more reasonable to plug backend directly to movie API. "www.themovie
 There are 2 modules Genre and Movie created in backend, each of them has one route to get multiple items. Movies result will be paged as it has a lot of items, genres will not be pages.
 
 Backend is structured according to NestJS conventions.
+
+I have used Redux-Toolkit for state management in frontend as suggested in requirements. single state slice is greated to store movie search string and selected genres. Two separate Redux RTK query APIs were created to fetch movies and genres.
+
+Initialy used TypeOrm repository API to query db, but had to use QueryBuilder instead to filter genres in Many-toMany relationship
+
+Added pagination to frontend. Search string, page number and selected genres are stored. To make query string for NestJS I have used "qs" package in frontend. It allows to easily convert array of genre ids to the format required by NestJS.

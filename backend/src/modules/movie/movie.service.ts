@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Movie } from "../../entities/movie.entity";
-import { ILike, Repository } from "typeorm";
-import { CreateMovieDto, MovieQueryDto } from "./movie.dto";
+import { Repository } from "typeorm";
+import { MovieQueryDto } from "./movie.dto";
 
 @Injectable()
 export class MovieService {
@@ -15,14 +15,20 @@ export class MovieService {
         const skip = query.offset || 0;
         const take = query.limit || 25;
 
-        const title = ILike(`%${query.search}%`);
+        let sqlQuery = this.movieRepository
+            .createQueryBuilder("movie")
+            .leftJoinAndSelect("movie.genres", "genre")
+            .where("movie.title LIKE :title", { title: `%${query.search}%` })
+            .skip(skip)
+            .take(take)
+            .orderBy("movie.id", "ASC");
 
-        const [data, count] = await this.movieRepository.findAndCount({
-            skip,
-            take,
-            where: { title },
-            order: { id: "asc" }
-        });
+        if (query.genres)
+            sqlQuery = sqlQuery.andWhere("genre.id IN(:...ids)", {
+                ids: query.genres
+            });
+
+        const [data, count] = await sqlQuery.getManyAndCount();
         return { data, count };
     }
 }
