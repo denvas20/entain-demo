@@ -8,7 +8,7 @@ interface ListResult<T = unknown> {
 
 export const genreApi = createApi({
     reducerPath: "genreApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100/genres" }),
+    baseQuery: fetchBaseQuery({ baseUrl: `${process.env.API_URL}/genres` }),
     endpoints: (builder) => ({
         getGenres: builder.query<ListResult<Genre>, null>({
             query: () => ""

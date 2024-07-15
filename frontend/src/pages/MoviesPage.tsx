@@ -1,35 +1,34 @@
 import {
     Button,
-    Checkbox,
-    FormControlLabel,
-    FormGroup,
+    Drawer,
     Grid,
     IconButton,
     InputAdornment,
     TextField
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useGetMoviesQuery } from "../redux/services/movie";
 import styled from "styled-components";
 import MovieTile from "../components/MovieTile";
-import { Search } from "@mui/icons-material";
+import { FilterAlt, Search } from "@mui/icons-material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
-    addGenre,
     decreasePage,
     increasePage,
-    removeGenre,
     setSearch
 } from "../redux/slices/searchSlice";
 import { useGetGenresQuery } from "../redux/services/genre";
+import GenreFilter from "../components/GenreFilter";
 
 interface SearchForm {
     search: string;
 }
 
 export default function MoviesPage() {
+    const [open, setOpen] = useState(false);
+
     const search = useSelector((state: RootState) => state.search.search);
     const page = useSelector((state: RootState) => state.search.page);
     const genres = useSelector((state: RootState) => state.search.genres);
@@ -73,11 +72,26 @@ export default function MoviesPage() {
                     <Grid container spacing={4}>
                         <Grid
                             item
-                            xs={0}
+                            xs={12}
+                            sm={0}
+                            sx={{ display: { xs: "block", sm: "none" } }}
+                        >
+                            <IconButton onClick={() => setOpen(true)}>
+                                <FilterAlt />
+                            </IconButton>
+                            <Drawer open={open} onClose={() => setOpen(false)}>
+                                <FilterWrapper>
+                                    <GenreFilter />
+                                </FilterWrapper>
+                            </Drawer>
+                        </Grid>
+                        <Grid
+                            item
                             sm={4}
                             sx={{ display: { xs: "none", sm: "block" } }}
                         >
-                            <StyledFormGroup>
+                            <GenreFilter />
+                            {/* <StyledFormGroup>
                                 {genreQuery.data &&
                                     genreQuery.data.data.map((genre, key) => (
                                         <FormControlLabel
@@ -103,7 +117,7 @@ export default function MoviesPage() {
                                             label={genre.name}
                                         />
                                     ))}
-                            </StyledFormGroup>
+                            </StyledFormGroup> */}
                         </Grid>
                         <Grid item xs={12} sm={8}>
                             {movieQuery.error && <div>Error</div>}
@@ -197,6 +211,7 @@ const MovieList = styled.div`
     gap: 1rem;
 `;
 
-const StyledFormGroup = styled(FormGroup)`
-    margin-top: 1rem;
+const FilterWrapper = styled.div`
+    margin-left: 1rem;
+    margin-right: 1rem;
 `;

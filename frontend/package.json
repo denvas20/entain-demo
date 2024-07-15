@@ -4,7 +4,8 @@
     "description": "",
     "author": "Deniss Vasilenko",
     "scripts": {
-        "dev": "webpack-dev-server --progress --mode development --env envFile=.env.development"
+        "dev": "webpack-dev-server --progress --mode development --env envFile=.env.development",
+        "build": "webpack --progress --mode production --env envFile=.env.production"
     },
     "license": "UNLICENSED",
     "dependencies": {

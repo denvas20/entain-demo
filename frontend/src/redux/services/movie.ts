@@ -17,7 +17,7 @@ interface ListResult<T = unknown> {
 
 export const movieApi = createApi({
     reducerPath: "movieApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3100/movies" }),
+    baseQuery: fetchBaseQuery({ baseUrl: `${process.env.API_URL}/movies` }),
     endpoints: (builder) => ({
         getMovies: builder.query<ListResult<Movie>, MovieQuery>({
             query: ({ search, page, genres }) => {

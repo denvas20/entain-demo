@@ -1,0 +1,21 @@
+name: entain-demo
+services:
+    postgres:
+        image: postgres:16-alpine
+        env_file: ./backend/.env.development.local
+        ports:
+            - "5432:5432"
+    backend:
+        build:
+            context: ./backend
+            dockerfile: ./Dockerfile
+        depends_on:
+            - postgres
+        ports:
+            - "3100:3100"
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: ./Dockerfile
+        ports:
+            - "3000:80"
