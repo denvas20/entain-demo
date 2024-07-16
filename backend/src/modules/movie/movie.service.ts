@@ -18,7 +18,7 @@ export class MovieService {
         let sqlQuery = this.movieRepository
             .createQueryBuilder("movie")
             .leftJoinAndSelect("movie.genres", "genre")
-            .where("movie.title LIKE :title", { title: `%${query.search}%` })
+            .where("movie.title ILIKE :title", { title: `%${query.search}%` })
             .skip(skip)
             .take(take)
             .orderBy("movie.id", "ASC");
